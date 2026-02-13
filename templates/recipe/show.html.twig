@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title  'Recette: ' ~ slug %}
+
+
+{% block body %}
+
+    {{ slug | upper}} {{ person.firstname ~ ' ' ~ person.lastname }}
+
+{% endblock %}
