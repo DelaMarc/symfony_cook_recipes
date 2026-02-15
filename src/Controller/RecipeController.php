@@ -78,4 +78,14 @@ final class RecipeController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/recette/{id}/delete', name: 'recipe.delete', methods:['DELETE'])]
+    public function delete(Recipe $recipe, EntityManagerInterface $em)
+    {
+        //dd($recipe);
+        $em->remove($recipe);
+        $em->flush();
+        $this->addFlash('success', 'La recette a bien été supprimée');
+        return $this->redirectToRoute('recipe.index');
+    }
 }
