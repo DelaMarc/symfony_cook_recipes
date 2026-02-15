@@ -8,10 +8,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 use DateTimeImmutable;
 
 class RecipeType extends AbstractType
@@ -20,10 +23,16 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre'
+                'label' => 'Titre',
+                'empty_data' => '',
             ])
-            ->add('slug')
-            ->add('content')
+            ->add('slug', TextType::class, [
+                'required' => 'false',
+                'empty_data' => '',
+            ])
+            ->add('content', TextareaType::class, [
+                'empty_data' => '',
+            ])
             ->add('duration')
             ->add('save', SubmitType::class, [
                 'label' => 'Envoyer'
