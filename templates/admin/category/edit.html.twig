@@ -1,0 +1,15 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title  'Modifier la Catégorie' ~ category.name %}
+
+
+{% block body %}
+
+    <h1>{{ 'Modifier la Catégorie' ~ category.name }}</h1>
+
+    {{ form_start(form) }}
+
+
+    {{ form_end(form) }}
+    
+{% endblock %}

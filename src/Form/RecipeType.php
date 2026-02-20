@@ -19,6 +19,11 @@ use DateTimeImmutable;
 
 class RecipeType extends AbstractType
 {
+    public function __construct(private FormListenerFactory $formListenerFactory)
+    {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -37,37 +42,9 @@ class RecipeType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Envoyer'
             ])
-            ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
-            ->addEventListener(FormEvents::POST_SUBMIT, $this->autoDating(...))
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->formListenerFactory->autoSlug('title'))
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->formListenerFactory->autoDating(...))
         ;
-    }
-
-    public function autoDating(PostSubmitEvent $event) : void
-    {
-        $data = $event->getData();
-        $now = new DateTimeImmutable();
-
-        if (!($data instanceof Recipe))
-        {
-            return;
-        }
-        if (!$data->getId())
-        {
-            $data->setCreatedAt($now);
-        }
-        $data->setUpdatedAt($now);
-    }
-
-    public function autoSlug(PreSubmitEvent $event) : void
-    {
-        $data = $event->getData();
-
-        if (empty($data['slug']))
-        {
-            $slugger = new AsciiSlugger();
-            $data['slug'] = strtolower($slugger->slug($data['title']));
-            $event->setData($data);
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
