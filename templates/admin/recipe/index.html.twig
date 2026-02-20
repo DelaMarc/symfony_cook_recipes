@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title %}
 
@@ -7,10 +7,6 @@ Toutes les recettes
 {% endblock %}
 
 {% block body %}
-
-<p>
-    Metus dolor mors ac formidonis
-</p>
 
 <p>
     <a class="btn btn-primary btn-sm" href="/recette/create">Nouvelle recette</a>
@@ -27,12 +23,12 @@ Toutes les recettes
         {% for recipe in recipes %}
             <tr>
                 <td>
-                    <a href="{{path('recipe.show', {id: recipe.id, slug: recipe.slug})}}">{{ recipe.title }}</a>
+                    <a href="{{path('admin.recipe.edit', {id: recipe.id, slug: recipe.slug})}}">{{ recipe.title }}</a>
                 </td>
                 <td>
                     <div class="d-flex gap-1">
-                        <a class="btn btn-primary btn-sm" href="{{path('recipe.edit', {id: recipe.id})}}">Modifier</a>
-                        <form action="{{path('recipe.delete', {id: recipe.id})}}" method="post">
+                        <a class="btn btn-primary btn-sm" href="{{path('admin.recipe.edit', {id: recipe.id})}}">Modifier</a>
+                        <form action="{{path('admin.recipe.delete', {id: recipe.id})}}" method="post">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                         </form>
